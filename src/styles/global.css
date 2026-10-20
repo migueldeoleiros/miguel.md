@@ -18,6 +18,14 @@
   color-scheme: light;
 }
 
+:root[data-theme='dark'] {
+  --paper: #151515;
+  --ink: #e3e2d9;
+  --muted: #a0a397;
+  --hover: #bdc1b2;
+  --selection: #45483e;
+  color-scheme: dark;
+}
 
 @font-face {
   font-family: Libron;
@@ -70,3 +78,46 @@ li a { text-decoration: none; }
 li a:hover { text-decoration: underline; }
 li span { color: var(--muted); }
 ::selection { background: var(--selection); }
+
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.theme-toggle[hidden],
+:root[data-theme='dark'] .icon-moon,
+:root:not([data-theme='dark']) .icon-sun { display: none; }
+.theme-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.theme-transition-expand::view-transition-old(root),
+.theme-transition-retract::view-transition-new(root) { z-index: 1; }
+.theme-transition-expand::view-transition-new(root) {
+  animation: theme-expand 850ms cubic-bezier(0.25, 1, 0.3, 1) both;
+  z-index: 2;
+}
+.theme-transition-retract::view-transition-old(root) {
+  animation: theme-retract 850ms cubic-bezier(0.25, 1, 0.3, 1) both;
+  z-index: 2;
+}
+@keyframes theme-expand {
+  from { clip-path: circle(0px at var(--theme-x) var(--theme-y)); }
+  to { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
+}
+@keyframes theme-retract {
+  from { clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y)); }
+  to { clip-path: circle(0px at var(--theme-x) var(--theme-y)); }
+}
