@@ -60,6 +60,24 @@ h1 {
 }
 
 .heading-marker { color: var(--muted); }
+.title-toggle {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.title-toggle:disabled { cursor: default; }
+.title-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+.title-text { white-space: nowrap; }
+.title-text::after { content: ''; border-right: 1px solid transparent; margin-left: 3px; }
+.title-toggle.is-typing .title-text::after { border-color: currentColor; }
+@media (max-width: 360px) {
+  h1 { font-size: 24px; }
+}
 p { margin: 0 0 22px; font-size: 20px; line-height: 1.65; }
 .tagline { margin-bottom: 12px; }
 h2 {
